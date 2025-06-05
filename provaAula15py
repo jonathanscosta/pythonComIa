@@ -1,0 +1,12 @@
+CREATE DATABASE cadastro;
+USE cadastro;
+
+CREATE TABLE clientes(
+id int PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR (50),
+idade INT,
+cidade VARCHAR(50)
+
+
+
+);
