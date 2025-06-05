@@ -1,0 +1,15 @@
+CREATE DATABASE cadastro;
+USE cadastro;
+
+
+
+CREATE TABLE Produtos (
+  ProdutoID INT PRIMARY KEY,
+  NomeProduto VARCHAR(100),
+  Quantidade INT,
+  Preco DECIMAL(10, 2)
+);
+INSERT INTO Produtos (ProdutoID, NomeProduto, Quantidade, Preco) VALUES
+(1, 'Camiseta', 50, 29.90),
+(2, 'Calça Jeans', 30, 99.90),
+(3, 'Tênis Esportivo', 20, 149.90);
