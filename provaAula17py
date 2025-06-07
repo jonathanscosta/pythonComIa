@@ -1,0 +1,74 @@
+CREATE DATABASE deposito;
+USE deposito;
+
+
+
+
+
+
+
+CREATE TABLE Produtos (
+    ProdutoID INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Preco DECIMAL(10,2)
+);
+CREATE TABLE Fornecedores (
+    FornecedorID INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Contato VARCHAR(100)
+);
+CREATE TABLE Estoque (
+    EstoqueID INT AUTO_INCREMENT PRIMARY KEY,
+    ProdutoID INT NOT NULL,
+    FornecedorID INT NOT NULL,
+    Quantidade INT NOT NULL,
+    DataEntrada DATE NOT NULL,
+    
+    FOREIGN KEY (ProdutoID) REFERENCES Produtos(ProdutoID),
+    FOREIGN KEY (FornecedorID) REFERENCES Fornecedores(FornecedorID)
+);
+
+INSERT INTO Produtos (Nome, Preco) VALUES 
+('Mouse', 50.00),
+('Teclado', 100.00),
+('Monitor', 800.00);
+
+
+INSERT INTO Fornecedores (Nome, Contato) VALUES 
+('Fornecedor A', 'contatoA@email.com'),
+('Fornecedor B', 'contatoB@email.com');
+
+
+INSERT INTO Estoque (ProdutoID, FornecedorID, Quantidade, DataEntrada) VALUES
+(1, 1, 20, '2025-06-01'),
+(2, 1, 15, '2025-06-03'),
+(3, 2, 10, '2025-06-05');
+SELECT 
+    E.EstoqueID,
+    P.Nome AS Produto,
+    F.Nome AS Fornecedor,
+    E.Quantidade,
+    E.DataEntrada
+FROM Estoque E
+JOIN Produtos P ON E.ProdutoID = P.ProdutoID
+JOIN Fornecedores F ON E.FornecedorID = F.FornecedorID;
+SELECT 
+    P.Nome AS Produto,
+    SUM(E.Quantidade) AS TotalEstocado
+FROM Estoque E
+JOIN Produtos P ON E.ProdutoID = P.ProdutoID
+GROUP BY P.Nome;
+
+
+
+SELECT 
+    P.ProdutoID, P.Nome AS Produto, E.Quantidade, E.DataEntrada
+FROM Produtos P
+LEFT JOIN Estoque E ON P.ProdutoID = E.ProdutoID
+
+UNION
+
+SELECT 
+    P.ProdutoID, P.Nome AS Produto, E.Quantidade, E.DataEntrada
+FROM Produtos P
+RIGHT JOIN Estoque E ON P.ProdutoID = E.ProdutoID;
